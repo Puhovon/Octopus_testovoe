@@ -1,6 +1,4 @@
 ; Возвращение в деревню (после сбора артефакта)
-@background ForestVillage
-@char NPC2 visible:false
 
 ; Диалог с самим собой
 {playerName}: Странно... Куда пропал Лесник?
@@ -8,14 +6,13 @@
 {playerName}: Нужно вернуться к Хранителю.
 
 ; Обновление квеста
-@UpdateQuest description:"Вернуться к Хранителю" step:4
 
 ; Переход на карту
 @showMap
 
 ; Финальная локация
-#FinalChoice
-@background AncientTemple
+# FinalChoice
+@back AncientTemple
 @char NPC1 position:40 visible:true
 @char NPC2 position:60 visible:true
 
@@ -29,19 +26,19 @@ NPC2: У меня больше прав на этот артефакт!
 @choice "Отдать Леснику" goto:.GiveNPC2
 @choice "Оставить себе" goto:.Keep
 
-#GiveNPC1
+# GiveNPC1
 @set choice=1
 @goto .FinalReaction
 
-#GiveNPC2
+# GiveNPC2
 @set choice=2
 @goto .FinalReaction
 
-#Keep
+# Keep
 @set choice=3
 @goto .FinalReaction
 
-#FinalReaction
+# FinalReaction
 @if choice==1
     @set NPC1Happy=true
     @set NPC2Happy=false
@@ -64,5 +61,3 @@ NPC2: У меня больше прав на этот артефакт!
 @char NPC2 face:{NPC2Happy ? "Happy" : "Angry"}
 
 ; Завершение квеста
-@UpdateQuest title="" description="" step:0
-@hideQuestLog

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f33bc85617b4ac0a803de940ee57092, type: 3}
+  m_Name: CustomEngineConfiguration
+  m_EditorClassIdentifier: 
+  GeneratedDataPath: NaninovelData
+  OverrideObjectsLayer: 0
+  ObjectsLayer: 0
+  AsyncExceptionLogType: 0
+  TypeAssemblies:
+  - Assembly-CSharp
+  - Assembly-CSharp-Editor
+  - Elringus.Naninovel.Runtime
+  - Elringus.Naninovel.Editor
+  InitializeOnApplicationLoad: 1
+  SceneIndependent: 1
+  ShowInitializationUI: 1
+  CustomInitializationUI: {fileID: 0}
+  EnableBridging: 0
+  ServerPort: 41016
+  AutoGenerateMetadata: 1
+  GenerateLabelMetadata: 1
+  EnableDevelopmentConsole: 1
+  DebugOnlyConsole: 0
+  _mapUIPrefab: {fileID: 4666068278564769154, guid: 6e15fb74089d41e448dc03c61456fdd3, type: 3}
