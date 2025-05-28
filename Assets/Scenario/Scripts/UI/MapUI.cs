@@ -25,20 +25,18 @@ namespace Scenario.Scripts
             base.Awake();
             inputManager = Engine.GetService<IInputManager>();
             
-            // Назначаем обработчики
             location1Button.onClick.AddListener(() => SelectLocation("ForestVillage"));
             location2Button.onClick.AddListener(() => SelectLocation("ForgottenForest"));
             location3Button.onClick.AddListener(() => SelectLocation("AncientTemple"));
             closeButton.onClick.AddListener(CloseMap);
             
-            // Скрываем панель при старте
             mapPanel.SetActive(false);
         }
 
         public UniTask<string> ShowMapAsync()
         {
             selectionSource = new UniTaskCompletionSource<string>();
-            
+            print(mapPanel);
             mapPanel.SetActive(true);
             Visible = true;
             

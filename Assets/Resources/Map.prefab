@@ -877,7 +877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableInteraction: 0
-  visibleOnAwake: 0
+  visibleOnAwake: 1
   controlOpacity: 1
   fadeTime: 0.3
   ignoreTimeScale: 1
@@ -905,7 +905,7 @@ MonoBehaviour:
   location2Button: {fileID: 6985195241565322217}
   location3Button: {fileID: 9191084216446421628}
   closeButton: {fileID: 4877025530454523809}
-  blockInput: 1
+  blockInput: 0
 --- !u!1 &5843155256344252490
 GameObject:
   m_ObjectHideFlags: 0
