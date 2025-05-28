@@ -1,0 +1,68 @@
+; Возвращение в деревню (после сбора артефакта)
+@background ForestVillage
+@char NPC2 visible:false
+
+; Диалог с самим собой
+{playerName}: Странно... Куда пропал Лесник?
+{playerName}: Этот артефакт излучает странную энергию.
+{playerName}: Нужно вернуться к Хранителю.
+
+; Обновление квеста
+@UpdateQuest description:"Вернуться к Хранителю" step:4
+
+; Переход на карту
+@showMap
+
+; Финальная локация
+#FinalChoice
+@background AncientTemple
+@char NPC1 position:40 visible:true
+@char NPC2 position:60 visible:true
+
+NPC1: Ты нашел артефакт! Отдавай его мне!
+NPC2: Не слушай его, {playerName}! Отдай артефакт мне!
+NPC1: Я лучше знаю, что с ним делать!
+NPC2: У меня больше прав на этот артефакт!
+
+; Финальный выбор
+@choice "Отдать Хранителю" goto:.GiveNPC1
+@choice "Отдать Леснику" goto:.GiveNPC2
+@choice "Оставить себе" goto:.Keep
+
+#GiveNPC1
+@set choice=1
+@goto .FinalReaction
+
+#GiveNPC2
+@set choice=2
+@goto .FinalReaction
+
+#Keep
+@set choice=3
+@goto .FinalReaction
+
+#FinalReaction
+@if choice==1
+    @set NPC1Happy=true
+    @set NPC2Happy=false
+    NPC1: Мудрое решение! Я использую его силу во благо.
+    NPC2: Ты пожалеешь об этом!
+@elseif choice==2
+    @set NPC1Happy=false
+    @set NPC2Happy=true
+    NPC1: Ты совершил огромную ошибку!
+    NPC2: Спасибо, {playerName}! Теперь лес будет в безопасности!
+@else
+    @set NPC1Happy=false
+    @set NPC2Happy=false
+    NPC1: Жадность погубит тебя!
+    NPC2: Ты не справишься с его силой!
+@end
+
+; Показываем реакцию персонажей
+@char NPC1 face:{NPC1Happy ? "Happy" : "Angry"}
+@char NPC2 face:{NPC2Happy ? "Happy" : "Angry"}
+
+; Завершение квеста
+@UpdateQuest title="" description="" step:0
+@hideQuestLog

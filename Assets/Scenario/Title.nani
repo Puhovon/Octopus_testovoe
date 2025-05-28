@@ -1,0 +1,15 @@
+@char girl1.default
+Hello|#19|
+Are you want to see me naked?|#1a|
+@choice Yes|#1b| goto:Accept
+@choice No|#1c| goto:Reject
+
+
+# Accept
+@char girl1.naked
+Are you like it?|#17|
+
+# Reject
+Ok...|#18|
+
+@stop

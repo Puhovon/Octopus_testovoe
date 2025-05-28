@@ -1,0 +1,10 @@
+; Начало игры - выбор имени
+@input playerName summary:"Введите имя игрока"
+@stop
+; Запуск квеста
+
+@goto Location1
+
+; Финал игры
+# Final
+@stop

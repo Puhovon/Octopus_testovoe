@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98aa4b58b11e9d4ca9dd8a4bf7bb71d, type: 3}
+  m_Name: ScriptGraphState
+  m_EditorClassIdentifier: 
+  NodesState:
+  - scriptName: InputName
+    position:
+      serializedVersion: 2
+      x: 426
+      y: -89
+      width: 189
+      height: 101
+  - scriptName: Location1_QuestStart
+    position:
+      serializedVersion: 2
+      x: 674
+      y: -103
+      width: 203
+      height: 245
+  - scriptName: Location2_QuestUpdate
+    position:
+      serializedVersion: 2
+      x: 920
+      y: -119
+      width: 213
+      height: 221
+  - scriptName: Location3_ItemInteraction
+    position:
+      serializedVersion: 2
+      x: 1153
+      y: -114
+      width: 194
+      height: 149
+  - scriptName: Location2_Empty
+    position:
+      serializedVersion: 2
+      x: 1364
+      y: -114
+      width: 144
+      height: 77
+  - scriptName: Location1_FinalDecision
+    position:
+      serializedVersion: 2
+      x: 250
+      y: -87
+      width: 181
+      height: 317
