@@ -1,57 +1,70 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 using Naninovel;
 
 public class MemoryGameController : MonoBehaviour
 {
-    [SerializeField] private GridLayoutGroup grid;
-    [SerializeField] private Card cardPrefab;
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private Transform gridContainer;
     [SerializeField] private Sprite[] cardSprites;
-    [SerializeField] private int pairsCount = 8;
-    
+    [SerializeField] private Sprite cardBack;
+    [SerializeField] private int totalPairs;
+
+    private List<Card> cards = new List<Card>();
     private Card firstSelected;
     private Card secondSelected;
+    private int pairsFound;
     private bool inputEnabled = true;
-    private UniTaskCompletionSource<bool> completionSource;
 
-    public async UniTask<bool> PlayGameAsync()
+    // Naninovel Integration Event
+    public event System.Action OnGameCompleted;
+
+    public void StartGame()
     {
-        completionSource = new UniTaskCompletionSource<bool>();
-        GenerateCards();
-        UniTask.WaitUntil(() => completionSource.Task.Result);
-        return await completionSource.Task;
+        pairsFound = 0;
+        CreateBoard();
     }
 
-    private void GenerateCards()
+    private void CreateBoard()
     {
-        List<int> values = new List<int>();
-        for (int i = 0; i < pairsCount; i++)
+        // Clear existing cards
+        foreach (Transform child in gridContainer) Destroy(child.gameObject);
+        cards.Clear();
+        
+        // Create pairs
+        var selectedSprites = new List<Sprite>();
+        for (int i = 0; i < totalPairs; i++)
         {
-            values.Add(i);
-            values.Add(i);
+            selectedSprites.Add(cardSprites[i % cardSprites.Length]);
+            selectedSprites.Add(cardSprites[i % cardSprites.Length]);
         }
         
-        for (int i = 0; i < values.Count; i++)
+        // Shuffle
+        for (int i = 0; i < selectedSprites.Count; i++)
         {
-            int temp = values[i];
-            int r = UnityEngine.Random.Range(i, values.Count);
-            values[i] = values[r];
-            values[r] = temp;
+            int randomIndex = Random.Range(i, selectedSprites.Count);
+            (selectedSprites[i], selectedSprites[randomIndex]) = 
+                (selectedSprites[randomIndex], selectedSprites[i]);
         }
-
-        for (int i = 0; i < values.Count; i++)
+        
+        // Instantiate cards
+        for (int i = 0; i < selectedSprites.Count; i++)
         {
-            Card card = Instantiate(cardPrefab, grid.transform);
-            card.Initialize(values[i], cardSprites[values[i]], OnCardClicked);
+            var cardGO = Instantiate(cardPrefab, gridContainer);
+            var card = cardGO.GetComponent<Card>();
+            card.Initialize(selectedSprites[i], cardBack, OnCardClicked);
+            cards.Add(card);
         }
     }
 
-    private async void OnCardClicked(Card card)
+    private void OnCardClicked(Card card)
     {
-        if (!inputEnabled || card == firstSelected || card.IsMatched) return;
-        
-        card.FlipOpen();
+        if (!inputEnabled || card.IsFlipped || card == firstSelected) 
+            return;
+
+        card.Flip();
         
         if (firstSelected == null)
         {
@@ -61,42 +74,31 @@ public class MemoryGameController : MonoBehaviour
         {
             secondSelected = card;
             inputEnabled = false;
-            
-            if (firstSelected.CardValue == secondSelected.CardValue)
-            {
-                firstSelected.MarkAsMatched();
-                secondSelected.MarkAsMatched();
-                
-                if (CheckGameComplete())
-                {
-                    await UniTask.Delay(1000);
-                    completionSource.TrySetResult(true);
-                }
-            }
-            else
-            {
-                // Карточки не совпали
-                await UniTask.Delay(1000);
-                firstSelected.FlipClosed();
-                secondSelected.FlipClosed();
-            }
-            
-            firstSelected = null;
-            secondSelected = null;
-            inputEnabled = true;
+            StartCoroutine(CheckMatch());
         }
     }
 
-    private bool CheckGameComplete()
+    private IEnumerator CheckMatch()
     {
-        string s = "";
-        foreach (Transform child in grid.transform)
+        yield return new WaitForSeconds(1f);
+        
+        if (firstSelected.FaceSprite == secondSelected.FaceSprite)
         {
-            Card card = child.GetComponent<Card>();
-            s += $"{card.CardValue} is {card.IsMatched}\n";
-            if (!card.IsMatched) return false;
+            pairsFound++;
+            if (pairsFound >= totalPairs)
+            {
+                OnGameCompleted?.Invoke();
+            }
         }
-        print(s);
-        return true;
+        else
+        {
+            firstSelected.Flip();
+            secondSelected.Flip();
+        }
+        
+        firstSelected = null;
+        secondSelected = null;
+        inputEnabled = true;
     }
 }
+

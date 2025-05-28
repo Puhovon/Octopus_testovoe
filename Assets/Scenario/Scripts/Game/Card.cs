@@ -3,41 +3,26 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    [SerializeField] private Image frontImage;
+    [SerializeField] private Image faceImage;
     [SerializeField] private Image backImage;
     [SerializeField] private Button button;
     
-    public int CardValue { get; private set; }
-    public bool IsMatched { get; private set; }
+    public Sprite FaceSprite { get; private set; }
+    public bool IsFlipped { get; private set; }
     
-    public void Initialize(int value, Sprite frontSprite, System.Action<Card> onClick)
+    public void Initialize(Sprite face, Sprite back, System.Action<Card> onClick)
     {
-        CardValue = value;
-        frontImage.sprite = frontSprite;
+        FaceSprite = face;
+        faceImage.sprite = face;
+        backImage.sprite = back;
         button.onClick.AddListener(() => onClick(this));
-        FlipClosed();
-    }
-
-    public void FlipOpen()
-    {
-        frontImage.gameObject.SetActive(true);
-        backImage.gameObject.SetActive(false);
-    }
-
-    public void FlipClosed()
-    {
-        frontImage.gameObject.SetActive(false);
+        IsFlipped = false;
         backImage.gameObject.SetActive(true);
     }
 
-    public void MarkAsMatched()
+    public void Flip()
     {
-        IsMatched = true;
-        button.interactable = false;
-        // Эффект совпадения
-        var color = frontImage.color;
-        color.a = .5f;
-        frontImage.material.color = color;
-
+        IsFlipped = !IsFlipped;
+        backImage.gameObject.SetActive(!IsFlipped);
     }
 }

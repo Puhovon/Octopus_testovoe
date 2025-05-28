@@ -392,8 +392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0028af39244e77bb0586190d60e34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontImage: {fileID: 6777798712239897342}
-  backImage: {fileID: 530335685849336462}
+  faceImage: {fileID: 530335685849336462}
+  backImage: {fileID: 6777798712239897342}
   button: {fileID: 2025444847406467122}
 --- !u!1 &8152518776598592809
 GameObject:
@@ -412,7 +412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6118701711972441677
 RectTransform:
   m_ObjectHideFlags: 0

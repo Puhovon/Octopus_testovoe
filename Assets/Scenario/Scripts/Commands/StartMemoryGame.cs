@@ -1,34 +1,26 @@
 ﻿using Naninovel;
+using Naninovel.UI;
 using UnityEngine;
 
-namespace Scenario.Scripts
+[CommandAlias("startMemoryGame")]
+public class StartMemoryGameCommand : Command
 {
-    [CommandAlias("startMemoryGame")]
-    public class StartMemoryGame : Command
+    
+    public override async UniTask ExecuteAsync (AsyncToken asyncToken = default)
     {
-        public override async UniTask ExecuteAsync(AsyncToken asyncToken = default)
-        {
-            var input = Engine.GetService<IInputManager>();
-            input.ProcessInput = false;
-
-            var scriptPlayer = Engine.GetService<IScriptPlayer>();
-            scriptPlayer.Stop();
-
-            var memoryGamePrefab = Resources.Load<GameObject>("MemoryGame");
-            var instance = GameObject.Instantiate(memoryGamePrefab);
-
-            var memoryGame = instance.GetComponent<MemoryGameController>();
-            bool success = await memoryGame.PlayGameAsync();
-            Debug.Log("Game end with result " + success );
-            GameObject.Destroy(instance);
-            Debug.Log(instance is null);
-            scriptPlayer.Play();
-            input.ProcessInput = true;
-            Debug.Log($"{scriptPlayer.HasPlayed("Location2")}, {input.ProcessInput}");
-
-            var variableManager = Engine.GetService<ICustomVariableManager>();
-            variableManager.SetVariableValue("MemoryGameResult", success.ToString());
-
-        }
+        
+        var gamePrefab = Resources.Load<GameObject>("MemoryGame");
+        var instance = Object.Instantiate(gamePrefab);
+        
+        var gameController = instance.GetComponent<MemoryGameController>();
+        gameController.StartGame();
+        
+        // 4. Ждать завершения
+        var waitCompletion = new UniTaskCompletionSource();
+        gameController.OnGameCompleted += () => waitCompletion.TrySetResult();
+        await waitCompletion.Task;
+        
+        // 5. Очистка
+        Object.Destroy(instance);
     }
 }

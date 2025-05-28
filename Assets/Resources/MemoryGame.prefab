@@ -45,13 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215f5ff0936dd0141a07de74851bef50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 316581271026863816}
-  cardPrefab: {fileID: 1105413777378824797, guid: d812d7df9ad04784b81d3ef8067150b0, type: 3}
+  cardPrefab: {fileID: 7816087515633200572, guid: d812d7df9ad04784b81d3ef8067150b0, type: 3}
+  gridContainer: {fileID: 7647898952481572632}
   cardSprites:
   - {fileID: 7446168115366759640, guid: 4a0c0736c40d4ee4d8c06d21c3a78a41, type: 3}
   - {fileID: 7640907130966498235, guid: 42e6a367608ef1f45b22a1d727bf94be, type: 3}
   - {fileID: 1357053932108319529, guid: ff5f6d8a14f09db4e8d757e87e419232, type: 3}
-  pairsCount: 3
+  cardBack: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  totalPairs: 3
 --- !u!1 &5782603406445289001
 GameObject:
   m_ObjectHideFlags: 0
