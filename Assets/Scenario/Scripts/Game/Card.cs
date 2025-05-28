@@ -23,6 +23,7 @@ public class Card : MonoBehaviour
     public void Flip()
     {
         IsFlipped = !IsFlipped;
+        faceImage.gameObject.SetActive(IsFlipped);
         backImage.gameObject.SetActive(!IsFlipped);
     }
 }
