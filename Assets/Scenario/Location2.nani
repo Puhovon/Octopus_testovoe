@@ -1,5 +1,5 @@
 @back ForestVillage
-@char NPC2 visible:true position:60
+@char girl1.default visible:true position:60
 
 NPC2: А, {playerName}! Хранитель прислал тебя?
 NPC2: Я покажу тебе тропу, но сначала докажи свою смекалку!

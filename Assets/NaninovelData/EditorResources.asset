@@ -169,5 +169,8 @@ MonoBehaviour:
     - name: naked
       pathPrefix: Characters/girl1
       guid: 090733d8c0e200944aae61ec3291b1e1
+    - name: angry
+      pathPrefix: Characters/girl1
+      guid: 6233f71eaf15e2649be261f697359fd8
   - Id: Audio
     Resources: []

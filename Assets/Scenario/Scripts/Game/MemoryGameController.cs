@@ -18,7 +18,6 @@ public class MemoryGameController : MonoBehaviour
     private int pairsFound;
     private bool inputEnabled = true;
 
-    // Naninovel Integration Event
     public event System.Action OnGameCompleted;
 
     public void StartGame()
@@ -29,11 +28,9 @@ public class MemoryGameController : MonoBehaviour
 
     private void CreateBoard()
     {
-        // Clear existing cards
         foreach (Transform child in gridContainer) Destroy(child.gameObject);
         cards.Clear();
         
-        // Create pairs
         var selectedSprites = new List<Sprite>();
         for (int i = 0; i < totalPairs; i++)
         {
@@ -41,7 +38,6 @@ public class MemoryGameController : MonoBehaviour
             selectedSprites.Add(cardSprites[i % cardSprites.Length]);
         }
         
-        // Shuffle
         for (int i = 0; i < selectedSprites.Count; i++)
         {
             int randomIndex = Random.Range(i, selectedSprites.Count);
@@ -49,7 +45,6 @@ public class MemoryGameController : MonoBehaviour
                 (selectedSprites[randomIndex], selectedSprites[i]);
         }
         
-        // Instantiate cards
         for (int i = 0; i < selectedSprites.Count; i++)
         {
             var cardGO = Instantiate(cardPrefab, gridContainer);

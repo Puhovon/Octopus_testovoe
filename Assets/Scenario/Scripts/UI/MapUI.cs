@@ -58,7 +58,6 @@ namespace Scenario.Scripts
             mapPanel.SetActive(false);
             Visible = false;
             
-            // Восстанавливаем ввод
             if (blockInput) inputManager.ProcessInput = true;
         }
     }

@@ -15,12 +15,10 @@ public class StartMemoryGameCommand : Command
         var gameController = instance.GetComponent<MemoryGameController>();
         gameController.StartGame();
         
-        // 4. Ждать завершения
         var waitCompletion = new UniTaskCompletionSource();
         gameController.OnGameCompleted += () => waitCompletion.TrySetResult();
         await waitCompletion.Task;
         
-        // 5. Очистка
         Object.Destroy(instance);
     }
 }
